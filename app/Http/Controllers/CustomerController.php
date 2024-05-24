@@ -42,9 +42,35 @@ class CustomerController extends Controller
         $data = compact('cust');
         return view('customer_details')->with($data);
     }
+    public function softdelete()
+    {
+        $cust = Customer::onlyTrashed()->get();
+
+        $data = compact('cust');
+        return view('customersoftdelete')->with($data);
+    }
+
     public function delete($id)
     {
         $cust = Customer::find($id)->delete();
+        return redirect('/index/view');
+
+    }
+    public function forcedelete($id)
+    {
+        $cust = Customer::withTrashed()->find($id);
+        if (!is_null($cust)) {
+            $cust->forceDelete();
+        }
+        return redirect('/index/view');
+
+    }
+    public function restore($id)
+    {
+        $cust = Customer::withTrashed()->find($id);
+        if (!is_null($cust)) {
+            $cust->restore();
+        }
         return redirect('/index/view');
 
     }

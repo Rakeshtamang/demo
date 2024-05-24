@@ -149,6 +149,8 @@
             <a href="{{ url('/index/view') }}">Customer</a>
         </div>
         <a class="add" href="{{ route('customer.add') }}">Add</a>
+        <a class="add" href="{{ url('index/view/softdelete') }}">Soft Delete</a>
+        <a class ="add" href="{{ url('/index/view') }}">Customer view</a>
 
         <!-- Added anchor tag for "Add" with specified styles -->
     </div>
@@ -181,13 +183,13 @@
                     </td>
                     <td>
 
-                        <a href="{{ route('customer.delete', ['id' => $val->customer_id]) }}">
+                        <a href="{{ route('customer.forcedelete', ['id' => $val->customer_id]) }}">
 
-                            <button class="delete">Soft Delete</button>
+                            <button class="delete"> Delete</button>
 
                         </a>
-                        <a href="{{ route('customer.edit', ['id' => $val->customer_id]) }}">
-                            <button class="edit">Edit</button>
+                        <a href="{{ route('customer.restore', ['id' => $val->customer_id]) }}">
+                            <button class="edit">Restore</button>
                         </a>
 
                     </td>

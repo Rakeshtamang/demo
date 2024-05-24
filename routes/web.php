@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 use App\Models\Customer;
+
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
@@ -21,9 +22,12 @@ Route::get('/product', function () {
 });
 Route::get('/index', [CustomerController::class, 'index'])->name('customer.add');
 Route::get('/index/delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
+Route::get('/index/forcedelete/{id}', [CustomerController::class, 'forcedelete'])->name('customer.forcedelete');
+Route::get('/index/restore/{id}', [CustomerController::class, 'restore'])->name('customer.restore');
 Route::get('/index/edit/{id}', [CustomerController::class, 'edit'])->name('customer.edit');
 Route::post('/index/update/{id}', [CustomerController::class, 'update'])->name('customer.update');
 Route::get('/index/view', [CustomerController::class, 'view']);
+Route::get('/index/view/softdelete', [CustomerController::class, 'softdelete']);
 Route::post('/index', [CustomerController::class, 'store']);
 Route::get('get-all-session', function () {
     $session = session()->all();
