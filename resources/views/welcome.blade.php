@@ -41,7 +41,13 @@
 
     <!-- HTML -->
     <div class="navbar">
-        <a class="active" href="#home">Khatabook</a>
+        <a class="active" href="#home">
+            @if (session()->has('name'))
+                {{ session()->get('name') }}
+            @else
+                Guest
+            @endif
+        </a>
         <a href="{{ url('/') }}">Home</a>
         <a href="{{ url('/index') }}">Register</a>
         <a href="{{ url('/index/view') }}">Customer</a>

@@ -9,12 +9,18 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        return view('form');
+        $cust = new Customer();  // Create a new instance of Customer
+        $url = url('/index');
+        $title = "User Registration Form";
+        $data = compact('cust', 'url', 'title');  // Include $cust in the data array
+
+        return view('form')->with($data);
     }
     public function store(Request $request)
     {
-        echo "<pre>";
-        print_r($request->all());
+        p($request->all());
+        die;
+
         $customer = new Customer;
         $customer->name = $request['name'];
         $customer->email = $request['email'];
@@ -42,4 +48,31 @@ class CustomerController extends Controller
         return redirect('/index/view');
 
     }
+    public function edit($id)
+    {
+        $cust = Customer::find($id);
+        if (is_null($cust)) {
+            return redirect('/index/view');
+        } else {
+            $title = "Update Form";
+            $url = url('/index/update') . "/" . $id;
+            $data = compact('cust', 'url', 'title');
+            var_dump($cust);
+            return view('form')->with($data);
+        }
+    }
+    public function update($id, Request $request)
+    {
+        $cust = Customer::find($id);
+        $cust->name = $request['name'];
+        $cust->email = $request['email'];
+        $cust->address = $request['address'];
+        $cust->state = $request['state'];
+        $cust->country = $request['country'];
+        $cust->dob = $request['dob'];
+        $cust->save();
+        return redirect('/index');
+
+    }
+
 }

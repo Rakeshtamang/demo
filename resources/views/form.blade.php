@@ -61,7 +61,6 @@
             background-color: #45a049;
         }
 
-        /* Add styles for the navbar */
         .navbar {
             background-color: black;
             overflow: hidden;
@@ -97,24 +96,29 @@
         <a href="{{ url('/index/view') }}">Customer</a>
     </div>
 
-    <h2>User Registration Form</h2>
+    <h2>{{ $title }}</h2>
 
-    <form action="{{ url('/') }}/index" method="post">
+    <form action="{{ $url }}" method="post">
         @csrf
         <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name"><br><br>
+        <input type="text" id="name" name="name" value="{{ old('name', $cust->name) }}">
+
+        <br><br>
 
         <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email"><br><br>
+        <input type="email" id="email" name="email" value="{{ old('email', $cust->email) }}">
+        <br><br>
 
         <label for="address">Address:</label><br>
-        <textarea id="address" name="address"></textarea><br><br>
+        <textarea id="address" name="address">{{ old('address', $cust->address) }}</textarea>
+
+        <br><br>
 
         <label for="state">State:</label><br>
         <select id="state" name="state">
-            <option value="AL">Alabama</option>
-            <option value="AK">Alaska</option>
-            <option value="AZ">Arizona</option>
+            <option value="AL" {{ $cust->state == 'AL' ? 'selected' : '' }}>Alabama</option>
+            <option value="AK" {{ $cust->state == 'AK' ? 'selected' : '' }}>Alaska</option>
+            <option value="AZ" {{ $cust->state == 'AZ' ? 'selected' : '' }}>Arizona</option>
             <!-- Add more options as needed -->
         </select><br><br>
 
@@ -122,7 +126,8 @@
         <input type="password" id="password" name="password"><br><br>
 
         <label for="dob">Date of Birth:</label><br>
-        <input type="date" id="dob" name="dob"><br><br>
+        <input type="date" id="dob" name="dob" value="{{ old('dob', $cust->dob) }}">
+        <br><br>
 
         <input type="submit" value="Submit">
     </form>

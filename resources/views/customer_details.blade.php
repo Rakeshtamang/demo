@@ -112,6 +112,29 @@
         span.inactive-status {
             background-color: #f44336;
         }
+
+        /* Styling for the edit button */
+        button.edit {
+            background-color: #3498db;
+            /* Set background color */
+            color: white;
+            /* Set text color */
+            padding: 8px 16px;
+            /* Add padding */
+            border: none;
+            /* Remove border */
+            border-radius: 4px;
+            /* Add border radius */
+            cursor: pointer;
+            /* Add cursor pointer */
+            margin-top: 5px;
+            /* Add some margin to separate from the delete button */
+        }
+
+        button.edit:hover {
+            background-color: #2980b9;
+            /* Darken background color on hover */
+        }
     </style>
 </head>
 
@@ -137,6 +160,7 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Address</th>
+                <th>State</th>
                 <th>DOB</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -148,6 +172,7 @@
                     <td>{{ $val->name }}</td>
                     <td>{{ $val->email }}</td>
                     <td>{{ $val->address }}</td>
+                    <td>{{ $val->state }}</td>
                     <td>{{ $val->dob }}</td>
                     <td>
                         <span class="status {{ $val->status == '1' ? 'active-status' : 'inactive-status' }}">
@@ -160,6 +185,9 @@
 
                             <button class="delete">Delete</button>
 
+                        </a>
+                        <a href="{{ route('customer.edit', ['id' => $val->customer_id]) }}">
+                            <button class="edit">Edit</button>
                         </a>
 
                     </td>
