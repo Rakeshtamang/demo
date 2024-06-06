@@ -34,11 +34,17 @@
             background-color: #4CAF50;
             color: white;
         }
+
+        /* Center content */
+        .centered {
+            text-align: center;
+            margin-top: 50px;
+            /* Adjust as needed */
+        }
     </style>
 </head>
 
 <body>
-
     <!-- HTML -->
     <div class="navbar">
         <a class="active" href="#home">
@@ -52,6 +58,13 @@
         <a href="{{ url('/index') }}">Register</a>
         <a href="{{ url('/index/view') }}">Customer</a>
     </div>
+
+    <!-- Centered content -->
+    <div class="centered">
+        <h1>@lang('welcome')</h1>
+        <!-- Add more centered content here -->
+    </div>
+
     @yield('content')
 
 </body>

@@ -65,34 +65,25 @@
         /* Styling for the "Add" anchor tag */
         .add {
             background-color: #4CAF50;
-            /* Same background color as other links */
             padding: 14px 20px;
             color: white;
             text-decoration: none;
             border-radius: 4px;
             margin-right: 20px;
-            /* Add some spacing */
         }
 
         /* Styling for the delete button */
         button.delete {
             background-color: red;
-            /* Set background color to red */
             color: white;
-            /* Set text color to white */
             padding: 8px 16px;
-            /* Add padding */
             border: none;
-            /* Remove border */
             border-radius: 4px;
-            /* Add border radius */
             cursor: pointer;
-            /* Add cursor pointer */
         }
 
         button.delete:hover {
             background-color: #c0392b;
-            /* Darken background color on hover */
         }
 
         /* Styling for status spans */
@@ -116,24 +107,80 @@
         /* Styling for the edit button */
         button.edit {
             background-color: #3498db;
-            /* Set background color */
             color: white;
-            /* Set text color */
             padding: 8px 16px;
-            /* Add padding */
             border: none;
-            /* Remove border */
             border-radius: 4px;
-            /* Add border radius */
             cursor: pointer;
-            /* Add cursor pointer */
             margin-top: 5px;
-            /* Add some margin to separate from the delete button */
         }
 
         button.edit:hover {
             background-color: #2980b9;
-            /* Darken background color on hover */
+        }
+
+        /* Search form styles */
+        .search-form {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            margin-right: 20px;
+        }
+
+        .search-form input[type="text"] {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .search-form button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .search-form button:hover {
+            background-color: #45a049;
+        }
+
+        /* Pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            list-style: none;
+            padding: 0;
+        }
+
+        .pagination li {
+            display: inline;
+            margin: 0 5px;
+        }
+
+        .pagination a,
+        .pagination span {
+            display: inline-block;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .pagination a:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .pagination .active span {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
         }
     </style>
 </head>
@@ -148,9 +195,18 @@
             <a href="{{ url('/index') }}">Register</a>
             <a href="{{ url('/index/view') }}">Customer</a>
         </div>
-        <a class="add" href="{{ route('customer.add') }}">Add</a>
+        <form action="" method="GET" class="search-form">
+            <div class="form-group">
+                <input type="text" id="" name="search"
+                    placeholder="Search by name or email"value="{{ $search }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a class="btn btn-primary search-btn" href="{{ url('/index/view') }}">
+                <button type="button">Reset</button>
+            </a>
 
-        <!-- Added anchor tag for "Add" with specified styles -->
+        </form>
+        <a class="add" href="{{ route('customer.add') }}">Add</a>
     </div>
 
     <!-- Table -->
@@ -180,21 +236,20 @@
                         </span>
                     </td>
                     <td>
-
                         <a href="{{ route('customer.delete', ['id' => $val->customer_id]) }}">
-
                             <button class="delete">Soft Delete</button>
-
                         </a>
                         <a href="{{ route('customer.edit', ['id' => $val->customer_id]) }}">
                             <button class="edit">Edit</button>
                         </a>
-
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+    <div class="pagination">
+        {{ $cust->links() }}
+    </div>
 </body>
 
 </html>

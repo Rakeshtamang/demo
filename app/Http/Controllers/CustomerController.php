@@ -18,8 +18,6 @@ class CustomerController extends Controller
     }
     public function store(Request $request)
     {
-        p($request->all());
-        die;
 
         $customer = new Customer;
         $customer->name = $request['name'];
@@ -35,13 +33,22 @@ class CustomerController extends Controller
 
 
     }
-    public function view()
+    public function view(Request $request)
     {
-        $cust = Customer::all();
+        $search = $request->input('search', '');
 
-        $data = compact('cust');
-        return view('customer_details')->with($data);
+        if ($search != '') {
+            $cust = Customer::where('name', 'like', "%$search%")
+                ->orWhere('email', 'like', "%$search%")
+                ->paginate(10);
+        } else {
+            $cust = Customer::paginate(10);
+        }
+
+        return view('customer_details', compact('cust', 'search'));
     }
+
+
     public function softdelete()
     {
         $cust = Customer::onlyTrashed()->get();

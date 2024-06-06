@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 use App\Models\Customer;
 
 use Illuminate\Http\Request;
+
+Route::get('/data', [IndexController::class, 'index']);
+Route::get('/group', [IndexController::class, 'group']);
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,15 +24,18 @@ Route::get('/product', function () {
     echo "<pre>";
     print_r($customer->toArray());
 });
-Route::get('/index', [CustomerController::class, 'index'])->name('customer.add');
-Route::get('/index/delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
-Route::get('/index/forcedelete/{id}', [CustomerController::class, 'forcedelete'])->name('customer.forcedelete');
-Route::get('/index/restore/{id}', [CustomerController::class, 'restore'])->name('customer.restore');
-Route::get('/index/edit/{id}', [CustomerController::class, 'edit'])->name('customer.edit');
-Route::post('/index/update/{id}', [CustomerController::class, 'update'])->name('customer.update');
-Route::get('/index/view', [CustomerController::class, 'view']);
-Route::get('/index/view/softdelete', [CustomerController::class, 'softdelete']);
-Route::post('/index', [CustomerController::class, 'store']);
+Route::group(['prefix' => 'index'], function () {
+    Route::get('/', [CustomerController::class, 'index'])->name('customer.add');
+    Route::get('/delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
+    Route::get('/forcedelete/{id}', [CustomerController::class, 'forcedelete'])->name('customer.forcedelete');
+    Route::get('/restore/{id}', [CustomerController::class, 'restore'])->name('customer.restore');
+    Route::get('/edit/{id}', [CustomerController::class, 'edit'])->name('customer.edit');
+    Route::post('/update/{id}', [CustomerController::class, 'update'])->name('customer.update');
+    Route::get('/view', [CustomerController::class, 'view']);
+    Route::get('/view/softdelete', [CustomerController::class, 'softdelete']);
+    Route::post('/', [CustomerController::class, 'store']);
+});
+
 Route::get('get-all-session', function () {
     $session = session()->all();
     p($session);
